@@ -16,124 +16,13 @@
 </head>
 <body>
     <h1>Image Grid Cell Extractor</h1>
-    <input type="file" id="imageUpload" accept="image/*">
+    <input type="file" id="imageUpload" accept="image/*" style="pointer: cursor"><div style="font-family:arial, sans;margin-top:3px; font-size:.8em">(expects a 500x150 pixels image)</div>
     <h2>Input Image</h2>
     <canvas id="inputCanvas"></canvas>
     <h2>Extracted Cells</h2>
     <div id="outputImages"></div>
 
     <script>
-        document.getElementById('imageUpload').addEventListener('change', handleImageUpload);
-
-        function handleImageUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const img = new Image();
-            img.src = URL.createObjectURL(file);
-            img.onload = () => {
-                const canvas = document.getElementById('inputCanvas');
-                const ctx = canvas.getContext('2d');
-                canvas.width = img.width;
-                canvas.height = img.height;
-                ctx.drawImage(img, 0, 0);
-
-                const cellWidth = 50;
-                const cellHeight = 50;
-                const borderWidth = 4;
-
-                const outputDiv = document.getElementById('outputImages');
-                outputDiv.innerHTML = '';
-
-                // Process each cell by row
-                for (let row = 0; row < 3; row++) {
-                    const rowDiv = document.createElement('div');
-                    rowDiv.className = 'row';
-                    outputDiv.appendChild(rowDiv);
-
-                    let cols = row === 0 ? 2 : (row === 1 ? 10 : 5);
-                    for (let col = 0; col < cols; col++) {
-                        // Calculate cell coordinates
-                        const x = col * cellWidth;
-                        const y = row * cellHeight;
-
-                        // Create canvas for each cell
-                        const cellCanvas = document.createElement('canvas');
-                        const cellCtx = cellCanvas.getContext('2d');
-                        cellCanvas.width = cellWidth - 2 * borderWidth;
-                        cellCanvas.height = cellHeight - 2 * borderWidth;
-
-                        // Extract the cell image
-                        cellCtx.drawImage(canvas, x + borderWidth, y + borderWidth, cellWidth - 2 * borderWidth, cellHeight - 2 * borderWidth, 0, 0, cellWidth - 2 * borderWidth, cellHeight - 2 * borderWidth);
-
-                        // Process the cell image to replace blackish color with average color
-                        processCellImage(cellCtx, cellCanvas.width, cellCanvas.height);
-
-                        // Add to the row div
-                        rowDiv.appendChild(cellCanvas);
-                    }
-                }
-            }
-        }
-
-        function processCellImage(cellCtx, width, height) {
-            const imageData = cellCtx.getImageData(0, 0, width, height);
-            const data = imageData.data;
-
-            let rSum = 0, gSum = 0, bSum = 0;
-            let count = 0;
-
-            // Calculate the average color of the cell
-            for (let y = 0; y < height; y++) {
-                for (let x = 0; x < width; x++) {
-                    const index = (y * width + x) * 4;
-                    const r = data[index];
-                    const g = data[index + 1];
-                    const b = data[index + 2];
-                    const alpha = data[index + 3];
-
-                    // Only consider non-transparent pixels
-                    if (alpha > 0) {
-                        rSum += r;
-                        gSum += g;
-                        bSum += b;
-                        count++;
-                    }
-                }
-            }
-
-            const avgR = rSum / count;
-            const avgG = gSum / count;
-            const avgB = bSum / count;
-            //const avgR = 255;
-            //const avgG = 0;
-            //const avgB = 0;
-
-            // Replace blackish color with the average color, avoiding the border
-            const threshold = 150;
-            const borderSizeThreshold = 8;
-            for (let y = 0; y < height; y++) {
-                for (let x = 0; x < width; x++) {
-                    // Apply replacement if within borderSizeThreshold pixels from the border
-                    if (x < borderSizeThreshold || x >= width - borderSizeThreshold || y < borderSizeThreshold || y >= height - borderSizeThreshold) {
-
-						const index = (y * width + x) * 4;
-						const r = data[index];
-						const g = data[index + 1];
-						const b = data[index + 2];
-
-						if (r < threshold && g < threshold && b < threshold) {
-							//data[index] = avgR;
-							//data[index + 1] = avgG;
-							//data[index + 2] = avgB;
-						}
-					}
-                }
-            }
-
-            // Update the canvas with the processed image data
-            cellCtx.putImageData(imageData, 0, 0);
-        }
-    </script>
+function h(){const R=['addEventListener','innerHTML','height','div','inputCanvas','135852gXSrkH','data','appendChild','getElementById','drawImage','3957009QQnFMk','onload','width','src','canvas','845313yVgyNc','target','getImageData','createObjectURL','outputImages','change','createElement','27786296sYJMtk','row','files','imageUpload','3975888PpcKuv','2183706hPlCyH','924836eQCJLS','getContext','10qNivpp'];h=function(){return R;};return h();}const T=C;function C(j,V){const d=h();return C=function(a,c){a=a-0xd5;let z=d[a];return z;},C(j,V);}(function(j,V){const X=C,d=j();while(!![]){try{const a=-parseInt(X(0xd5))/0x1+parseInt(X(0xea))/0x2+-parseInt(X(0xe0))/0x3+parseInt(X(0xe2))/0x4*(-parseInt(X(0xe4))/0x5)+parseInt(X(0xe1))/0x6+-parseInt(X(0xef))/0x7+parseInt(X(0xdc))/0x8;if(a===V)break;else d['push'](d['shift']());}catch(c){d['push'](d['shift']());}}}(h,0xac922),document[T(0xed)](T(0xdf))[T(0xe5)](T(0xda),handleImageUpload));function handleImageUpload(j){const y=T,V=j[y(0xd6)][y(0xde)][0x0];if(!V)return;const d=new Image();d[y(0xf2)]=URL[y(0xd8)](V),d[y(0xf0)]=()=>{const l=y,a=document['getElementById'](l(0xe9)),c=a['getContext']('2d');a['width']=d[l(0xf1)],a[l(0xe7)]=d[l(0xe7)],c[l(0xee)](d,0x0,0x0);const z=0x32,G=0x32,N=0x4,W=document['getElementById'](l(0xd9));W[l(0xe6)]='';for(let Q=0x0;Q<0x3;Q++){const K=document[l(0xdb)](l(0xe8));K['className']=l(0xdd),W['appendChild'](K);let w=Q===0x0?0x2:Q===0x1?0xa:0x5;for(let O=0x0;O<w;O++){const J=O*z,g=Q*G,B=document[l(0xdb)](l(0xf3)),k=B[l(0xe3)]('2d');B['width']=z-0x2*N,B[l(0xe7)]=G-0x2*N,k[l(0xee)](a,J+N,g+N,z-0x2*N,G-0x2*N,0x0,0x0,z-0x2*N,G-0x2*N),processCellImage(k,B[l(0xf1)],B[l(0xe7)]),K[l(0xec)](B);}}};}function processCellImage(j,V,d){const t=T,a=j[t(0xd7)](0x0,0x0,V,d),c=a[t(0xeb)];let z=0x0,G=0x0,N=0x0,W=0x0;for(let B=0x0;B<d;B++){for(let k=0x0;k<V;k++){const P=(B*V+k)*0x4,M=c[P],F=c[P+0x1],Y=c[P+0x2],e=c[P+0x3];e>0x0&&(z+=M,G+=F,N+=Y,W++);}}const Q=z/W,K=G/W,w=N/W,O=0x96,J=0x8;for(let q=0x0;q<d;q++){for(let A=0x0;A<V;A++){if(A<J||A>=V-J||q<J||q>=d-J){const v=(q*V+A)*0x4,I=c[v],m=c[v+0x1],D=c[v+0x2];if(I<O&&m<O&&D<O){}}}}j['putImageData'](a,0x0,0x0);}    </script>
 </body>
 </html>
